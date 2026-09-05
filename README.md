@@ -71,37 +71,6 @@ src/
 └── main.jsx                 # Entry point aplikasi
 ```
 
----
-
-## Cara Menjalankan Proyek Secara Lokal
-
-### Prasyarat
-- Pastikan sudah menginstal [Node.js](https://nodejs.org/) (versi 18+ disarankan).
-
-### Langkah-langkah
-```bash
-# 1. Clone repository
-git clone https://github.com/KATA-YAA-GAS-AJA/YAA-ITK-AJA.git
-
-# 2. Masuk ke direktori proyek
-cd YAA-ITK-AJA
-
-# 3. Instal dependensi
-npm install
-
-# 4. Jalankan development server
-npm run dev
-```
-
-Aplikasi akan berjalan secara lokal.
-
-### Build untuk Produksi
-```bash
-npm run build
-```
-
----
-
 ## Disclaimer Medis
 
 > **RumahSiap memuat panduan statis yang tervalidasi untuk logistik dan tata ruang rumah — BUKAN diagnosis medis atau resep obat baru.**  
