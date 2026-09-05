@@ -36,8 +36,8 @@ Sistem secara otomatis memetakan profil kebutuhan pasien ke dalam salah satu dar
 ### 4. Daftar Belanja Cerdas (*ShoppingList*)
 - Rekomendasi logistik awal ±2 minggu sesuai kategori pemulihan.
 - Dilengkapi status urgensi: **Wajib**, **Disarankan**, dan **Opsional**.
-- **📄 Ekspor PDF**: Unduh daftar belanja dalam format PDF siap cetak.
-- **💬 Kirim ke WhatsApp**: Buat draft pesan pesanan otomatis untuk dikirim ke apotek terdekat atau anggota keluarga yang berbelanja.
+- ** Ekspor PDF**: Unduh daftar belanja dalam format PDF siap cetak.
+- ** Kirim ke WhatsApp**: Buat draft pesan pesanan otomatis untuk dikirim ke apotek terdekat atau anggota keluarga yang berbelanja.
 
 ### 5. Checklist Ruangan (*RoomChecklist*)
 - Panduan inspeksi langkah demi langkah per area: **Kamar Tidur**, **Kamar Mandi**, dan **Jalur Akses/Koridor**.
