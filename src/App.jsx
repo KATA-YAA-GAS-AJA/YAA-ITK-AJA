@@ -1,16 +1,16 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Landing from './components/Landing.jsx'
 import LiveChat from './components/LiveChat.jsx'
 import Result from './components/Result.jsx'
 import AuthModal from './components/AuthModal.jsx'
-
 export default function App() {
   const [step, setStep] = useState('landing')
   const [chatResult, setChatResult] = useState(null)
   const [showAuthModal, setShowAuthModal] = useState(false)
+  const [authModalMode, setAuthModalMode] = useState('login')
 
-  // Sesi Autentikasi Pengguna & Profil Pasien
+  // Sesi Autentikasi Pengguna & Profil Pasien (Pure LocalStorage)
   const [authUser, setAuthUser] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem('rumahsiap_active_user') || 'null')
@@ -30,10 +30,16 @@ export default function App() {
   // Memulai alur konsultasi: wajibkan login/profil jika belum ada
   const start = () => {
     if (!authUser || !activePatient) {
+      setAuthModalMode('login')
       setShowAuthModal(true)
     } else {
       setStep('chat')
     }
+  }
+
+  const handleOpenAuth = (mode = 'login') => {
+    setAuthModalMode(mode)
+    setShowAuthModal(true)
   }
 
   const handleLoginSuccess = (user, patient) => {
@@ -84,7 +90,7 @@ export default function App() {
               onStart={start}
               authUser={authUser}
               activePatient={activePatient}
-              onOpenAuth={() => setShowAuthModal(true)}
+              onOpenAuth={() => handleOpenAuth('login')}
               onLogout={handleLogout}
             />
           )}
@@ -111,6 +117,7 @@ export default function App() {
       {/* Modal Autentikasi Pengguna & Profil Pasien */}
       <AuthModal
         isOpen={showAuthModal}
+        initialMode={authModalMode}
         onClose={() => setShowAuthModal(false)}
         onLoginSuccess={handleLoginSuccess}
         currentPatient={activePatient}
