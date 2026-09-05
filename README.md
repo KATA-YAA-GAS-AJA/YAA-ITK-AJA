@@ -1,6 +1,6 @@
 # 🏥 RumahSiap — Asisten Transisi Pasien Pulang
 
-> **Prototipe Hackathon** • Menerjemahkan instruksi pulang rumah sakit menjadi panduan visual, daftar belanja apotek, dan checklist ruangan siap aksi bagi keluarga pasien.
+Menerjemahkan instruksi pulang rumah sakit menjadi panduan visual, daftar belanja apotek, dan checklist ruangan siap aksi bagi keluarga pasien.
 
 ---
 
