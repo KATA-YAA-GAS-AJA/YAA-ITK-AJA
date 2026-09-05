@@ -17,30 +17,20 @@ Ketika pasien diizinkan pulang dari rawat inap (misal pasca-operasi, pasca-strok
 
 ## Fitur Unggulan
 
-### 1. Kuesioner Asesmen Cepat (< 2 Menit)
-- 8 pertanyaan interaktif yang mudah dipahami dan ramah pengguna.
-- Mengidentifikasi kondisi mobilitas, kebutuhan sterilisasi luka, risiko tersandung, dan kesiapan ruangan.
+### 1. Live Chat Konsultan AI Berbasis 10 Jurnal Medis
+- Konsultasi interaktif berbahasa Indonesia yang dirancang khusus untuk keluarga pasien awam (non-medis).
+- Pengguna dapat mengetik pertanyaan atau keluhan bebas mengenai kondisi pasien, atau memilih opsi cepat yang disodorkan AI.
+- AI langsung menjawab secara terfokus pada keluhan spesifik yang dialami pasien, berlandaskan pedoman klinis dari 10 jurnal dan standar kesehatan resmi (Kemenkes RI Permenkes No. 27, CDC SSI, AHA/ASA Stroke, Barthel Index, AAOS Arthroplasty, Morse Fall Scale, AHA/ACC Heart Failure, WHO Adherence, CDC STEADI, dan WHO ICOPE).
+- Mendukung integrasi Google Gemini API dan dilengkapi Built-in Clinical RAG Engine bawaan.
 
-### 2. Mesin Klasifikasi Instan (*Rule-Based Retrieval*)
-Sistem secara otomatis memetakan profil kebutuhan pasien ke dalam salah satu dari **5 Kategori Protokol Pemulihan**:
-- **Pemulihan Luka / Pasca-Operasi**: Sterilisasi dan higienitas permukaan.
-- **Pasca-Stroke**: Penataan lingkungan bebas hambatan dan mobilitas aman.
-- **Tulang & Sendi (Ortopedi)**: Penataan jalur jalan, *grab bar*, dan lantai anti-slip.
-- **Pasca-Perawatan Jantung**: Zona istirahat tenang dan manajemen kepatuhan obat.
-- **Lansia Umum**: Penataan rumah ramah lansia dan mitigasi risiko jatuh.
+### 2. Saran Perlengkapan & Logistik Pasien
+- Rekomendasi perlengkapan esensial (seperti kassa steril, cairan NaCl 0.9%, kotak obat sekat, walker/kruk, kursi mandi anti-slip).
+- Disajikan sebagai bacaan rekomendasi praktis yang menjelaskan fungsi dan tujuan penggunaan setiap barang.
+- Fitur ekspor: Simpan dalam format PDF atau bagikan langsung via WhatsApp.
 
-### 3. Kanvas Visual Interaktif (*CareCanvas*)
-- Denah visual 2D interaktif kamar pasien.
-- Dilengkapi tombol toggle **" Kondisi Awal"** vs **"✓ Sudah Dirapikan"** untuk melihat secara visual bagaimana kabel, karpet, dan jalur jalan diamankan.
-
-### 4. Daftar Belanja Cerdas (*ShoppingList*)
-- Rekomendasi logistik awal ±2 minggu sesuai kategori pemulihan.
-- Dilengkapi status urgensi: **Wajib**, **Disarankan**, dan **Opsional**.
-- ** Ekspor PDF**: Unduh daftar belanja dalam format PDF siap cetak.
-- ** Kirim ke WhatsApp**: Buat draft pesan pesanan otomatis untuk dikirim ke apotek terdekat atau anggota keluarga yang berbelanja.
-
-### 5. Checklist Ruangan (*RoomChecklist*)
-- Panduan inspeksi langkah demi langkah per area: **Kamar Tidur**, **Kamar Mandi**, dan **Jalur Akses/Koridor**.
+### 3. Panduan Perawatan Mandiri di Rumah
+- Langkah-langkah perawatan harian terarah (teknik aseptik balutan, aturan tumpuan beban, pencegahan jatuh, dan rutinitas jadwal obat).
+- Dilengkapi tips praktis keluarga untuk mempermudah eksekusi di rumah.
 
 ---
 
@@ -51,37 +41,34 @@ Sistem secara otomatis memetakan profil kebutuhan pasien ke dalam salah satu dar
 | **Framework** | [React 18](https://react.dev/) + [Vite 6](https://vitejs.dev/) |
 | **Styling** | [Tailwind CSS v4](https://tailwindcss.com/) |
 | **Animasi & Transisi** | [Framer Motion](https://www.framer.com/motion/) |
+| **AI Engine** | Google Gemini API + Built-in Clinical RAG Engine |
 | **PDF Generation** | [jsPDF](https://github.com/parallax/jsPDF) |
-| **Integrasi Eksternal** | WhatsApp Click-to-Chat API URI |
+| **Integrasi Eksternal** | WhatsApp Click-to-Chat URI & OpenAlex API |
 
 ---
 
 ## Struktur Proyek
 
 ```text
-infinite/
-├── src/
-│   ├── components/
-│   │   ├── Landing.jsx          # Halaman beranda & pengenalan
-│   │   ├── Questionnaire.jsx    # Alur pengisian 8 pertanyaan
-│   │   ├── Result.jsx           # Dasbor hasil klasifikasi pemulihan
-│   │   ├── CareCanvas.jsx       # Kanvas 2D visual tata letak ruangan
-│   │   ├── ShoppingList.jsx     # Manajemen daftar belanja logistik
-│   │   ├── RoomChecklist.jsx    # Checklist mitigasi tiap ruangan
-│   │   ├── VisualGuide.jsx      # Panduan tata ruang & instruksi higienitas
-│   │   └── Icon.jsx             # Kumpulan ikon UI
-│   ├── data/
-│   │   ├── protocols.js         # Master data protokol 5 kategori pemulihan
-│   │   └── questions.js         # Master data 8 butir pertanyaan & skor
-│   ├── lib/
-│   │   ├── classifier.js        # Logika scoring & tie-break kategori
-│   │   ├── pdf.js               # Utilitas generate dokumen PDF
-│   │   └── waMessage.js         # Utilitas generator teks pesan WhatsApp
-│   ├── App.jsx                  # State manager & page flow controller
-│   └── main.jsx                 # Entry point aplikasi
-├── package.json
-├── vite.config.js
-└── README.md
+src/
+├── components/
+│   ├── Landing.jsx          # Halaman beranda & pengenalan layanan
+│   ├── LiveChat.jsx         # Ruang konsultasi Live AI Chat interaktif
+│   ├── Result.jsx           # Rangkuman saran perawatan & hasil pemulihan
+│   ├── ShoppingList.jsx     # Panduan bacaan saran perlengkapan logistik
+│   ├── VisualGuide.jsx      # Langkah praktis panduan perawatan di rumah
+│   └── Icon.jsx             # Kumpulan ikon UI SVG
+├── data/
+│   ├── protocols.js         # Master data protokol & 10 rujukan jurnal
+│   └── questions.js         # Taksonomi evaluasi pemulihan
+├── lib/
+│   ├── aiConsultant.js      # Mesin AI Konsultan (Gemini API + Clinical RAG)
+│   ├── evidenceService.js   # Layanan integrasi literatur terbuka OpenAlex
+│   ├── classifier.js        # Klasifikasi skor pemulihan pasien
+│   ├── pdf.js               # Utilitas generate dokumen PDF
+│   └── waMessage.js         # Utilitas generator teks pesan WhatsApp
+├── App.jsx                  # State manager & pengatur alur halaman
+└── main.jsx                 # Entry point aplikasi
 ```
 
 ---

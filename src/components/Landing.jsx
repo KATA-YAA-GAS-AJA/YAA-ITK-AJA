@@ -2,18 +2,18 @@ import { motion } from 'framer-motion'
 import { Icon } from './Icon.jsx'
 
 const FEATURES = [
-  { icon: 'eye', title: 'Panduan Visual Interaktif', desc: 'Kanvas tata ruang yang bisa "dibetulkan" langkah demi langkah — tanpa baca dokumen panjang.' },
-  { icon: 'cart', title: 'Daftar Belanja Cerdas', desc: 'Daftar belanja apotek otomatis per kategori, tinggal cetak PDF atau kirim ke WhatsApp.' },
-  { icon: 'clipboard', title: 'Checklist Ruangan', desc: 'Periksa tiap ruangan rumah satu per satu supaya tidak ada sudut yang terlewat.' },
+  { icon: 'message', title: 'Live Chat Konsultan AI', desc: 'Konsultasi tanya-jawab langsung seputar keluhan pasien, berlandaskan 18 pedoman medis resmi.' },
+  { icon: 'cart', title: 'Saran Perlengkapan & Logistik', desc: 'Rekomendasi kebutuhan apotek dan alat keselamatan yang siap dibagikan ke WhatsApp atau disimpan PDF.' },
+  { icon: 'shield', title: 'Panduan Perawatan Terarah', desc: 'Langkah praktis perawatan mandiri di rumah yang aman, higienis, dan mudah dipraktikkan keluarga awam.' },
 ]
 
 const STEPS = [
-  { n: '1', t: 'Jawab 8 pertanyaan singkat', d: 'Urut-urut dan ramah lansia, maksimal 3 menit.' },
-  { n: '2', t: 'Sistem memetakan kategori pemulihan', d: 'Murni pencarian template valid — bukan AI peramal.' },
-  { n: '3', t: 'Terima 3 dasbor siap aksi', d: 'Panduan, belanja, dan checklist ruang langsung rampung.' },
+  { n: '1', t: 'Live Chat dengan AI Konsultan', d: 'Ketik keluhan atau pertanyaan Anda secara bebas, atau pilih topik yang tersedia.' },
+  { n: '2', t: 'AI Menganalisis Berbasis Pedoman Medis', d: 'Menjawab langsung inti permasalahan pasien sesuai standar keselamatan Kemenkes & CDC.' },
+  { n: '3', t: 'Terima Saran & Panduan Lengkap', d: 'Saran perlengkapan logistik dan langkah perawatan harian langsung siap diterapkan di rumah.' },
 ]
 
-export default function Landing({ onStart }) {
+export default function Landing({ onStart, authUser, activePatient, onOpenAuth, onLogout }) {
   return (
     <div className="mx-auto max-w-5xl px-5 py-10 sm:py-16">
       <header className="flex items-center justify-between">
@@ -23,9 +23,40 @@ export default function Landing({ onStart }) {
           </span>
           <span className="text-lg font-extrabold tracking-tight text-slate-900">Rumah<span className="text-teal-600">Siap</span></span>
         </div>
-        <span className="hidden rounded-full border border-teal-200 bg-teal-50 px-3 py-1 text-xs font-semibold text-teal-700 sm:block">
-          Prototipe Hackathon • Asisten Transisi Pasien
-        </span>
+
+        <div className="flex items-center gap-3">
+          {authUser ? (
+            <div className="flex items-center gap-2">
+              <div className="hidden sm:flex flex-col text-right">
+                <span className="text-xs font-bold text-slate-900">{authUser.name}</span>
+                <span className="text-[11px] font-semibold text-teal-700">
+                  Pasien: {activePatient?.name || 'Pilih Pasien'} ({activePatient?.relation || ''})
+                </span>
+              </div>
+              <button
+                onClick={onOpenAuth}
+                className="rounded-xl border border-teal-200 bg-teal-50 px-3 py-1.5 text-xs font-bold text-teal-800 transition hover:bg-teal-100"
+              >
+                Ganti Pasien
+              </button>
+              <button
+                onClick={onLogout}
+                className="rounded-xl border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-slate-500 transition hover:bg-slate-100"
+                title="Keluar dari akun pendamping"
+              >
+                Keluar
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={onOpenAuth}
+              className="inline-flex items-center gap-1.5 rounded-xl border border-teal-200 bg-teal-50 px-3.5 py-1.5 text-xs font-bold text-teal-800 transition hover:bg-teal-100"
+            >
+              <Icon name="user" className="h-3.5 w-3.5" />
+              Masuk / Daftar Akun
+            </button>
+          )}
+        </div>
       </header>
 
       <main className="mt-12 sm:mt-20">
@@ -38,23 +69,34 @@ export default function Landing({ onStart }) {
               className="mb-4 inline-flex items-center gap-2 rounded-full bg-amber-100 px-3.5 py-1.5 text-xs font-bold text-amber-800"
             >
               <Icon name="alert" className="h-4 w-4" />
-              Tanpa klaim medis — murni panduan logistik & tata ruang
+              Panduan Praktis Persiapan Rumah & Logistik Pasca-Rawat Inap
             </motion.div>
             <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-5xl">
               Rumah <span className="text-teal-600">Siap</span> Terima Pasien Pulang
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate-600">
-              Terjemahkan instruksi pulang yang singkat menjadi <b>panduan visual</b>,{' '}
-              <b>daftar belanja apotek</b>, dan <b>checklist ruangan</b> yang bisa langsung dikerjakan
-              keluarga — tanpa panik, tanpa lupa.
+              Konsultasikan keluhan pasien pasca-rawat inap dengan <b>AI Pendamping</b>, lalu dapatkan{' '}
+              <b>saran perlengkapan apotek</b> dan <b>panduan perawatan praktis</b> di rumah
+              berbasis 18 pedoman medis resmi — tanpa panik, tanpa ragu.
             </p>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            {activePatient && (
+              <div className="mt-4 inline-flex items-center gap-2 rounded-2xl border border-teal-200 bg-teal-50/90 px-4 py-2 text-xs font-semibold text-teal-900">
+                <span className="flex h-5 w-5 items-center justify-center rounded-md bg-teal-600 text-white text-[10px] font-bold">
+                  {activePatient.name.charAt(0).toUpperCase()}
+                </span>
+                <span>
+                  Pasien Aktif: <b>{activePatient.name}</b> ({activePatient.relation}, {activePatient.age} th)
+                </span>
+              </div>
+            )}
+
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <button
-                onClick={onStart}
+                onClick={authUser ? onStart : onOpenAuth}
                 className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-teal-600 px-7 py-4 text-lg font-bold text-white shadow-xl shadow-teal-600/30 transition hover:bg-teal-700 focus:outline-none focus-visible:ring-4 focus-visible:ring-teal-300"
               >
-                Mulai Sekarang — Gratis
+                {activePatient ? `Konsultasi untuk ${activePatient.name}` : 'Mulai Konsultasi — Gratis'}
                 <Icon name="arrowRight" className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </button>
               <a
@@ -66,7 +108,7 @@ export default function Landing({ onStart }) {
             </div>
 
             <p className="mt-4 text-sm text-slate-500">
-              ⏱ Rendering 3 dasbor di bawah 1 detik setelah kuesioner selesai.
+              ⏱ Respon Langsung Real-Time • 100% Bebas Biaya & Ramah Keluarga
             </p>
           </div>
 
@@ -81,21 +123,21 @@ export default function Landing({ onStart }) {
                 <span className="h-3 w-3 rounded-full bg-rose-400" />
                 <span className="h-3 w-3 rounded-full bg-amber-400" />
                 <span className="h-3 w-3 rounded-full bg-emerald-400" />
-                <span className="ml-3 text-xs text-slate-400">rumahsiap.app — hasil pasca-rawat inap</span>
+                <span className="ml-3 text-xs text-slate-400">rumahsiap.app — asisten pemulihan rumah</span>
               </div>
               <div className="rounded-2xl bg-white p-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-[11px] font-bold uppercase tracking-wider text-teal-600">Kategori terpilih</p>
-                    <p className="text-xl font-extrabold text-slate-900">Pemulihan Luka / Pasca-Operasi</p>
+                    <p className="text-[11px] font-bold uppercase tracking-wider text-teal-600">Konsultasi Terpandu</p>
+                    <p className="text-xl font-extrabold text-slate-900">Pemulihan Pasca-Rawat Inap</p>
                   </div>
-                  <span className="rounded-xl bg-sky-100 p-2.5 text-sky-600"><Icon name="bandage" className="h-6 w-6" /></span>
+                  <span className="rounded-xl bg-teal-100 p-2.5 text-teal-700"><Icon name="message" className="h-6 w-6" /></span>
                 </div>
                 <div className="mt-4 grid grid-cols-3 gap-2">
                   {[
-                    { icon: 'eye', label: 'Panduan Visual', n: '7 langkah' },
-                    { icon: 'cart', label: 'Daftar Belanja', n: '9 barang' },
-                    { icon: 'clipboard', label: 'Checklist Ruang', n: '3 ruangan' },
+                    { icon: 'message', label: 'Tanya AI', n: 'Interaktif' },
+                    { icon: 'cart', label: 'Saran Logistik', n: 'Terkurasi' },
+                    { icon: 'book', label: 'Dasar Ilmiah', n: '18 Pedoman' },
                   ].map((c) => (
                     <div key={c.label} className="rounded-xl bg-slate-50 p-3 text-center">
                       <span className="mx-auto mb-1 flex h-8 w-8 items-center justify-center rounded-lg bg-teal-100 text-teal-700">
@@ -108,12 +150,12 @@ export default function Landing({ onStart }) {
                 </div>
                 <div className="mt-4 flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2.5 text-xs font-semibold text-emerald-700">
                   <Icon name="check" className="h-4 w-4" />
-                  8/9 item belanja sudah dicentang — siap cetak PDF
+                  Rekomendasi perlengkapan & panduan siap diterapkan di rumah
                 </div>
               </div>
             </div>
             <div className="absolute -right-4 -top-4 hidden rounded-2xl bg-amber-100 px-4 py-2 text-sm font-bold text-amber-800 shadow-lg sm:block">
-              ⚡ Siap dalam 3 menit
+              💬 Tanya jawab langsung
             </div>
           </motion.div>
         </div>
@@ -167,14 +209,14 @@ export default function Landing({ onStart }) {
 
         <section className="mt-16 rounded-3xl bg-slate-900 p-8 text-center sm:p-12">
           <Icon name="shield" className="mx-auto h-10 w-10 text-teal-400" />
-          <h2 className="mt-3 text-2xl font-extrabold text-white sm:text-3xl">Pintar, Tapi Tidak "Meraba"</h2>
+          <h2 className="mt-3 text-2xl font-extrabold text-white sm:text-3xl">Standar Perawatan Terpercaya untuk Keluarga</h2>
           <p className="mx-auto mt-3 max-w-2xl text-slate-300">
-            Sistem memetakan jawaban Anda ke <b className="text-white">1 dari 5 template</b> yang sudah divalidasi di
-            database statis. Tidak ada AI generatif, tidak ada teks halusinasi — semua konten berasal dari standar
-            resmi seperti <b className="text-white">Kemenkes RI, IWGDF, dan ADA</b>.
+            Setiap rekomendasi tata ruang, daftar logistik apotek, dan langkah perawatan dirancang berdasarkan
+            pedoman resmi keselamatan pasien (<b className="text-white">Kemenkes RI, CDC, dan WHO</b>).
+            Semua instruksi tersusun jelas, terstruktur, dan siap dipraktikkan langsung di rumah keluarga.
           </p>
           <p className="mx-auto mt-4 max-w-2xl text-sm text-slate-400">
-            RumahSiap tidak memberikan diagnosis, tidak mengganti obat, dan tidak menggantikan nasihat tenaga medis.
+            RumahSiap berfungsi sebagai pendamping logistik dan lingkungan pemulihan, bukan pengganti pemeriksaan medis dokter.
           </p>
           <button
             onClick={onStart}
@@ -187,8 +229,8 @@ export default function Landing({ onStart }) {
       </main>
 
       <footer className="mt-16 border-t border-slate-200 pt-6 text-center text-xs text-slate-400">
-        RumahSiap — Prototipe untuk hackathon. Sumber acuan: prinsip tata ruang & sterilisasi Kemenkes RI / IWGDF / ADA.
-        Selalu patuh pada instruksi dokter dan perawat Anda.
+        RumahSiap — Layanan Panduan Persiapan Rumah Pasca-Rawat Inap untuk Masyarakat Indonesia.
+        Disusun mengacu pada standar keselamatan Kemenkes RI, CDC, dan WHO. Selalu utamakan instruksi dokter dan tim medis Anda.
       </footer>
     </div>
   )

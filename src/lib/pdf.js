@@ -116,6 +116,25 @@ export async function downloadShoppingListPDF(categoryId, items, checkedMap) {
     y += 1
   }
 
+  // Evidence / Journal citations
+  if (meta.curatedEvidence && meta.curatedEvidence.length > 0) {
+    y = y + 5
+    y = newPageIfNeeded(y + 22)
+    doc.setFont('helvetica', 'bold')
+    doc.setFontSize(10)
+    doc.setTextColor(...TEAL)
+    doc.text('Dasar Ilmiah & Rujukan Terbuka (Open Access Evidence)', M, y)
+    y += 4
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(8)
+    doc.setTextColor(...SLATE)
+    for (const ev of meta.curatedEvidence) {
+      const citeText = `${ev.title} — ${ev.journal} (${ev.year}) [${ev.doiUrl}]`
+      y = bullet(doc, citeText, M, y, maxW - 12, 4.5)
+      y += 0.8
+    }
+  }
+
   // Disclaimer box
   y = y + 6
   const discLines = wrap(doc, SHARED_DISCLAIMER, maxW - 10)

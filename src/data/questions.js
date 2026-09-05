@@ -1,6 +1,5 @@
-// Kuesioner input → skor ke 5 kategori pemulihan.
-// Setiap pilihan menjumlahkan skor ke kategori; skor tertinggi menentukan hasil.
-// TIDAK ada logika generatif — murni pencarian (retrieval) template statis.
+// Kuesioner pemetaan profil pemulihan pasien pasca-rawat inap.
+// Menghitung skor kesesuaian kategori untuk menentukan panduan logistik & tata ruang yang relevan.
 
 export const QUESTIONS = [
   {

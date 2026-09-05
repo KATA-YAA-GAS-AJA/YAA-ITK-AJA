@@ -1,17 +1,73 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Landing from './components/Landing.jsx'
-import Questionnaire from './components/Questionnaire.jsx'
+import LiveChat from './components/LiveChat.jsx'
 import Result from './components/Result.jsx'
+import AuthModal from './components/AuthModal.jsx'
 
 export default function App() {
   const [step, setStep] = useState('landing')
-  const [answers, setAnswers] = useState({})
+  const [chatResult, setChatResult] = useState(null)
+  const [showAuthModal, setShowAuthModal] = useState(false)
 
-  const start = () => setStep('questionnaire')
-  const finish = (ans) => { setAnswers(ans); setStep('result') }
-  const restart = () => { setAnswers({}); setStep('landing') }
-  const redo = () => { setAnswers({}); setStep('questionnaire') }
+  // Sesi Autentikasi Pengguna & Profil Pasien
+  const [authUser, setAuthUser] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('rumahsiap_active_user') || 'null')
+    } catch {
+      return null
+    }
+  })
+
+  const [activePatient, setActivePatient] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('rumahsiap_active_patient') || 'null')
+    } catch {
+      return null
+    }
+  })
+
+  // Memulai alur konsultasi: wajibkan login/profil jika belum ada
+  const start = () => {
+    if (!authUser || !activePatient) {
+      setShowAuthModal(true)
+    } else {
+      setStep('chat')
+    }
+  }
+
+  const handleLoginSuccess = (user, patient) => {
+    setAuthUser(user)
+    setActivePatient(patient)
+    setStep('chat')
+  }
+
+  const handleSelectPatient = (patient) => {
+    setActivePatient(patient)
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem('rumahsiap_active_user')
+    localStorage.removeItem('rumahsiap_active_patient')
+    setAuthUser(null)
+    setActivePatient(null)
+    setStep('landing')
+  }
+
+  const finish = (res) => {
+    setChatResult(res)
+    setStep('result')
+  }
+
+  const restart = () => {
+    setChatResult(null)
+    setStep('landing')
+  }
+
+  const redo = () => {
+    setChatResult(null)
+    setStep('chat')
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-teal-50 via-white to-emerald-50">
@@ -23,11 +79,43 @@ export default function App() {
           exit={{ opacity: 0, y: -12 }}
           transition={{ duration: 0.35, ease: 'easeOut' }}
         >
-          {step === 'landing' && <Landing onStart={start} />}
-          {step === 'questionnaire' && <Questionnaire onDone={finish} onBack={restart} />}
-          {step === 'result' && <Result answers={answers} onRestart={restart} onRedo={redo} />}
+          {step === 'landing' && (
+            <Landing
+              onStart={start}
+              authUser={authUser}
+              activePatient={activePatient}
+              onOpenAuth={() => setShowAuthModal(true)}
+              onLogout={handleLogout}
+            />
+          )}
+
+          {step === 'chat' && (
+            <LiveChat
+              onFinish={finish}
+              onBack={restart}
+              patientProfile={activePatient}
+              caregiverUser={authUser}
+            />
+          )}
+
+          {step === 'result' && (
+            <Result
+              chatResult={chatResult}
+              onRestart={restart}
+              onRedo={redo}
+            />
+          )}
         </motion.div>
       </AnimatePresence>
+
+      {/* Modal Autentikasi Pengguna & Profil Pasien */}
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+        onLoginSuccess={handleLoginSuccess}
+        currentPatient={activePatient}
+        onSelectPatient={handleSelectPatient}
+      />
     </div>
   )
 }

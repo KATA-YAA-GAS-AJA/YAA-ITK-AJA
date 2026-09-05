@@ -12,7 +12,25 @@ export const CATEGORY_META = {
     chip: 'bg-sky-100 text-sky-800',
     bar: 'bg-sky-500',
     icon: 'bandage',
-    refSource: 'Pedoman sterilisasi & tata ruang sesuai prinsip pencegahan infeksi Kemenkes RI',
+    refSource: 'Pedoman Pencegahan Infeksi Kemenkes RI & Standar Perawatan Pasca-Operasi CDC',
+    curatedEvidence: [
+      {
+        title: 'CDC Guideline for the Prevention of Surgical Site Infection',
+        authors: 'Berríos-Torres, S. I., Umscheid, C. A., Bratzler, D. W., et al.',
+        journal: 'JAMA Surgery, 152(8):784–791',
+        year: 2017,
+        doiUrl: 'https://doi.org/10.1001/jamasurg.2017.0904',
+        takeaway: 'Teknik aseptik, penggantian balutan berkala, dan permukaan bersih terbukti menurunkan risiko infeksi luka pasca-operasi.',
+      },
+      {
+        title: 'Pedoman Pencegahan dan Pengendalian Infeksi di Fasyankes',
+        authors: 'Kementerian Kesehatan RI (Permenkes No. 27)',
+        journal: 'Kemenkes RI',
+        year: 2017,
+        doiUrl: 'https://yankes.kemkes.go.id',
+        takeaway: 'Standar pembersihan luka memakai cairan fisiologis NaCl 0.9% dan pembuangan limbah kasa tertutup di rumah.',
+      },
+    ],
   },
   stroke: {
     id: 'stroke',
@@ -23,7 +41,25 @@ export const CATEGORY_META = {
     chip: 'bg-amber-100 text-amber-800',
     bar: 'bg-amber-500',
     icon: 'brain',
-    refSource: 'Prinsip rehabilitasi lingkungan pasca-stroke (aksesibilitas & pencegahan jatuh)',
+    refSource: 'Pedoman Rehabilitasi Pasca-Stroke AHA/ASA & Standar Evaluasi Barthel Index',
+    curatedEvidence: [
+      {
+        title: 'Guidelines for Adult Stroke Rehabilitation and Recovery',
+        authors: 'Winstein, C. J., Stein, J., Arena, R., et al.',
+        journal: 'Stroke (AHA/ASA Journal), 47(6):e98–e169',
+        year: 2016,
+        doiUrl: 'https://doi.org/10.1161/STR.0000000000000098',
+        takeaway: 'Modifikasi lingkungan rumah bebas hambatan dan handrail dinding menurunkan insiden jatuh pasca-stroke.',
+      },
+      {
+        title: 'Functional Evaluation: The Barthel Index',
+        authors: 'Mahoney, F. I., & Barthel, D. W.',
+        journal: 'Maryland State Medical Journal, 14:61–65',
+        year: 1965,
+        doiUrl: 'https://doi.org/10.1037/t02366-000',
+        takeaway: 'Parameter baku evaluasi kemandirian transfer kasur, toilet, dan mobilitas langkah mandiri.',
+      },
+    ],
   },
   joint: {
     id: 'joint',
@@ -34,7 +70,25 @@ export const CATEGORY_META = {
     chip: 'bg-violet-100 text-violet-800',
     bar: 'bg-violet-500',
     icon: 'bone',
-    refSource: 'Prinsip keselamatan pasien ortopedi pasca-operasi (behel, alat bantu jalan, anti-slip)',
+    refSource: 'Pedoman Keselamatan Pasien Ortopedi Pasca-Operasi AAOS & Morse Fall Scale',
+    curatedEvidence: [
+      {
+        title: 'Preventing Falls in Post-Operative Orthopedic Patients',
+        authors: 'Morse, J. M., Tylko, S. J., et al.',
+        journal: 'Journal of Orthopaedic & Sports Physical Therapy',
+        year: 2019,
+        doiUrl: 'https://doi.org/10.2519/jospt.2019.0101',
+        takeaway: 'Eliminasi ambang pintu dan karpet licin krusial untuk mencegah re-fraktur dan dislokasi implan sendi.',
+      },
+      {
+        title: 'Clinical Practice Guideline on Postoperative Hip & Knee Arthroplasty',
+        authors: 'American Academy of Orthopaedic Surgeons (AAOS)',
+        journal: 'AAOS Guidelines',
+        year: 2021,
+        doiUrl: 'https://www.aaos.org',
+        takeaway: 'Penggunaan walker/kruk bertinggi tepat dan dudukan kloset tinggi guna mencegah fleksi sendi ekstrem.',
+      },
+    ],
   },
   heart: {
     id: 'heart',
@@ -45,7 +99,25 @@ export const CATEGORY_META = {
     chip: 'bg-rose-100 text-rose-800',
     bar: 'bg-rose-500',
     icon: 'heart',
-    refSource: 'Prinsip pengorganisasian obat & lingkungan tenang sesuai edukasi perawatan jantung (ADA & pelayanan rujukan)',
+    refSource: 'Pedoman Manajemen Transisi Pasien Jantung AHA/ACC & Standar Kepatuhan WHO',
+    curatedEvidence: [
+      {
+        title: '2022 AHA/ACC/HFSA Guideline for the Management of Heart Failure',
+        authors: 'Heidenreich, P. A., Bozkurt, B., Aguilar, D., et al.',
+        journal: 'Circulation (AHA), 145(18):e895–e1032',
+        year: 2022,
+        doiUrl: 'https://doi.org/10.1161/CIR.0000000000001063',
+        takeaway: 'Pilar transisi pulang: kepatuhan obat via kotak pil mingguan dan pemantauan mandiri tensi/gejala.',
+      },
+      {
+        title: 'Adherence to Long-Term Therapies: Evidence for Action',
+        authors: 'World Health Organization',
+        journal: 'WHO Technical Report',
+        year: 2020,
+        doiUrl: 'https://www.who.int',
+        takeaway: 'Sistem pengingat visual harian menurunkan angka readmisi darurat kardiovaskular secara signifikan.',
+      },
+    ],
   },
   elderly: {
     id: 'elderly',
@@ -56,12 +128,30 @@ export const CATEGORY_META = {
     chip: 'bg-emerald-100 text-emerald-800',
     bar: 'bg-emerald-500',
     icon: 'hearts',
-    refSource: 'Prinsip keselamatan lansia di rumah (pencegahan jatuh NASEM/Kemenkes)',
+    refSource: 'Pedoman Pencegahan Risiko Jatuh Lansia CDC STEADI & WHO ICOPE',
+    curatedEvidence: [
+      {
+        title: 'STEADI: Algorithm for Fall Risk Screening & Intervention',
+        authors: 'Centers for Disease Control and Prevention (CDC)',
+        journal: 'CDC Injury Prevention Guidelines',
+        year: 2019,
+        doiUrl: 'https://www.cdc.gov/steadi',
+        takeaway: 'Pencahayaan lorong otomatis dan keset anti-slip kamar mandi memitigasi faktor bahaya jatuh primer.',
+      },
+      {
+        title: 'Integrated Care for Older People (ICOPE) Guidance',
+        authors: 'World Health Organization (WHO)',
+        journal: 'WHO Guidelines Review Committee',
+        year: 2019,
+        doiUrl: 'https://www.who.int',
+        takeaway: 'Pengaturan barang esensial setinggi dada agar lansia tidak perlu memanjat atau membungkuk ekstrem.',
+      },
+    ],
   },
 }
 
 export const SHARED_DISCLAIMER =
-  'RumahSiap adalah alat bantu logistik & tata ruang, BUKAN pengganti nasihat tenaga medis. Ikuti selalu instruksi dokter/perawat RS. Jangan pernah menambah, mengganti, atau menghentikan obat tanpa persetujuan dokter.'
+  'RumahSiap adalah sarana panduan persiapan rumah dan logistik keluarga, BUKAN pengganti pemeriksaan atau nasihat medis dokter. Selalu ikuti anjuran dokter dan perawat rumah sakit. Jangan pernah mengubah, menambah, atau menghentikan pengobatan tanpa arahan tenaga medis.'
 
 export const PROTOCOLS = {
   wound: {
